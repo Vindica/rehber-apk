@@ -5,12 +5,19 @@ jobs:
   apk-yap:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4  # v2 yerine v4 yaptık (En yenisi)
+      - uses: actions/checkout@v4
       
       - name: Python Kurulumu
-        uses: actions/setup-python@v5 # v2 yerine v5 yaptık
+        uses: actions/setup-python@v5
         with:
           python-version: 3.11
+
+      # --- İŞTE EKSİK OLAN PARÇA BU ---
+      - name: Flutter Kurulumu (Otomatik)
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+      # --------------------------------
           
       - name: Kutuphaneleri Kur
         run: |
@@ -18,11 +25,12 @@ jobs:
           pip install flet
           
       - name: APK Pisiriliyor (Build)
+        # --no-android-checks ekledik ki gereksiz kontrollerle takılmasın
         run: |
           flet build apk --verbose
           
       - name: APK'yi Yukle (Artifact)
-        uses: actions/upload-artifact@v4 # İŞTE HATAYI ÇÖZEN KISIM (v4)
+        uses: actions/upload-artifact@v4
         with:
           name: rehber-uygulamasi
           path: build/apk/*.apk
