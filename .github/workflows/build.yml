@@ -1,0 +1,28 @@
+name: APK Yapici
+on: [push]
+
+jobs:
+  apk-yap:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Python Kurulumu
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.11
+          
+      - name: Kutuphaneleri Kur
+        run: |
+          pip install -r requirements.txt
+          pip install flet
+          
+      - name: APK Pisiriliyor (Build)
+        run: |
+          flet build apk --verbose
+          
+      - name: APK'yi Yukle (Artifact)
+        uses: actions/upload-artifact@v2
+        with:
+          name: rehber-uygulamasi
+          path: build/apk/*.apk
