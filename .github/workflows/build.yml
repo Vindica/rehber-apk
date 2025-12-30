@@ -5,10 +5,10 @@ jobs:
   apk-yap:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4  # v2 yerine v4 yaptık (En yenisi)
       
       - name: Python Kurulumu
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v5 # v2 yerine v5 yaptık
         with:
           python-version: 3.11
           
@@ -22,7 +22,7 @@ jobs:
           flet build apk --verbose
           
       - name: APK'yi Yukle (Artifact)
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4 # İŞTE HATAYI ÇÖZEN KISIM (v4)
         with:
           name: rehber-uygulamasi
           path: build/apk/*.apk
